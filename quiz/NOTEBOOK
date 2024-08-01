@@ -23,10 +23,49 @@ que vem no buffer.
 
 3. P3
 
-a)
+a) Pelas convenções de syscalls, o %eax é usado para receber o retorno das funções.
+As convenções definem como a arquitetura do processador lida com a memória e com os
+registradores realizam suas funções a nível de máquina. o ABI define as estruturas 
+e métodos que são compilados em baixo nível
 
-b)
+b) Ele utiliza o tamanho da função alocada no %ebp para alocar o retorno, que antes
+estava no %eax. Ele desaloca do registrador %eax, porque a convenção principal
+é que o %eax seja utilizado para receber retornos de funções.
 
-c)
+c) São usados para alocar a respectiva função e desalocá-la, isso se vê que é usado
+o tamanho da função a partir de onde ele é alocado (%ebp).
 
-d)
+d) Ele é uma convenção para guardar a função alocada em algum lugar na stack, 
+mas como a main já tem um espaço definido anteriormente na stack para recebê-lo
+ele é colocado nesse endereço, enquanto os outros são colocados enquanto a stack
+é preenchida. Essa é a maneira que a ABI do x86 lida com os endereços de funções.
+
+e) O espaço alocado para o retorno muda, enquanto com o retorno int, aloca 16 bits
+no char, aloca 4 bits. Isso é perceptível no espaço deixado nas syscalls antes
+do retorno da função.
+
+P4
+
+a) Nos 2 primeiros o retorno foi "foo" enquanto no terceiro não conseguiu
+compartilhar as bibliotecas
+
+b) Em static, a biblioteca sempre é carregada junto no binário enquanto
+dinamico é versionado separadamente e é carregado uma versao diferente do original
+e que pode ser compartilhado entre vários componentes.
+
+c) Nos dois primeiros, o foo é listado como texto (código), no terceiro
+é definido como indefinido. O bar, no primeiro é definido, mas como não
+é chamado, no segundo e terceiro não é definido.
+
+d) Nos dois primeiros, a shared library é só o libc.so.6, enquanto no 
+terceiro é usado o libp4.so. Quando o terceiro é compilado, o custom library
+é compilado junto ao executavel e é definido como uma flag a ser usado
+
+e) No dinâmico, quando o programa deve ser usado em vários hosts, a biblioteca
+é compartilhada não precisando ser ocupar o mesmo espaço em todos os hosts;
+porém quando é atualizado, os estáticos são melhores são, porque irão compilar
+tudo o que foi atualizado em todos os hosts.
+Agora quando várias libraries são usadas no mesmo host, dinamicamente irão
+compilar exatamente o que é usado para cada executável. Enquanto estaticamente,
+todo a biblioteca é compilada no binário de cada executável.
+
