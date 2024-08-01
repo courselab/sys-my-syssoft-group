@@ -13,7 +13,7 @@ p1 : p1.c
 	gcc -m64 $< -o $@
 
 p2 : p2.c
-	gcc -Wall -m64  -O0 -fno-stack-protector -fno-pic -fno-pie -Wl,-no-pie $(CFLAGS) $<  -o $@
+	gcc -Wall -m64  -O0 -fno-stack-protector -fno-pic -fno-pie -Wl,-no-pie $<  -o $@
 
 p3 : p3.c
 	gcc -Wall -m64  -O0  -fno-pic -fno-pie -Wl,-no-pie $< -o $@

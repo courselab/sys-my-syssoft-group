@@ -1,3 +1,32 @@
 #    SPDX-FileCopyrightText: 2024 reisvictor1 <reisvictor448@gmail.com>
 #   
 #    SPDX-License-Identifier: GPL-3.0-or-later
+
+
+Answers:
+
+1. P1
+
+a) A main, como outras funções e defines como o printf, são definidas antes do tempo
+de compilação, tendo um espaço definido na stack quando ele é executado
+
+2. P2
+
+a) O que ocorreu para ter essa vulnerabilidade é, como que o input foi direto do buffer 
+para a variável, todo o buffer foi alocado no espaço da memória. Quando foi realizar
+a verificação, todo o espaço que foi alocado para a memória foi testado, mas como o espaço
+principalmente alocado no programa era diferente do espaço alocado real, o programa
+não conseguiu definir e não fez a verificação. Isso se vê quando a stack é protegida e
+a memória não deixa ser alocado do buffer mais memória do que foi definido.
+Uma maneira de corrigir essa vulnerabilidade é alocar dinamicamente a memória do input
+que vem no buffer.
+
+3. P3
+
+a)
+
+b)
+
+c)
+
+d)
