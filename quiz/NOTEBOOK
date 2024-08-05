@@ -10,6 +10,9 @@ Answers:
 a) A main, como outras funções e defines como o printf, são definidas antes do tempo
 de compilação, tendo um espaço definido na stack quando ele é executado
 
+~~~> E porque aparece com endereços diferentes?
+~~~>> 0.0
+
 2. P2
 
 a) O que ocorreu para ter essa vulnerabilidade é, como que o input foi direto do buffer 
@@ -20,6 +23,14 @@ não conseguiu definir e não fez a verificação. Isso se vê quando a stack é
 a memória não deixa ser alocado do buffer mais memória do que foi definido.
 Uma maneira de corrigir essa vulnerabilidade é alocar dinamicamente a memória do input
 que vem no buffer.
+
+~~~> Todo tipo de variável é alocano no espaço de memória.
+     Não entendi o que quer dizer com "todo espaço para a memória foi testado",
+     ou com "o espaço ... alocado era diferente do espaço alocado real".
+     Neste exemplo, a proteção de memória (canário) não chega a funcionar.
+     Por que alocar dinamicamente resolveria o problema?
+
+~~~>> 1.0
 
 3. P3
 
@@ -32,34 +43,59 @@ b) Ele utiliza o tamanho da função alocada no %ebp para alocar o retorno, que 
 estava no %eax. Ele desaloca do registrador %eax, porque a convenção principal
 é que o %eax seja utilizado para receber retornos de funções.
 
+~~~> Sim, %eax é utilizado para retorno na convenção CDCL. Porém, não faz sentido
+     falar em "alocar" registrador.
+
 c) São usados para alocar a respectiva função e desalocá-la, isso se vê que é usado
 o tamanho da função a partir de onde ele é alocado (%ebp).
+
+~~~> O que signficaria "alocar função"?
+     O propósito das referidas instuções relaciona-se à manutenção do stack frame.
 
 d) Ele é uma convenção para guardar a função alocada em algum lugar na stack, 
 mas como a main já tem um espaço definido anteriormente na stack para recebê-lo
 ele é colocado nesse endereço, enquanto os outros são colocados enquanto a stack
 é preenchida. Essa é a maneira que a ABI do x86 lida com os endereços de funções.
 
+~~~> Você se refere à alocação de variáveis locais? Não entendi.
+
+
 e) O espaço alocado para o retorno muda, enquanto com o retorno int, aloca 16 bits
 no char, aloca 4 bits. Isso é perceptível no espaço deixado nas syscalls antes
 do retorno da função.
+
+~~~> Não entendi "espaço alocado para retorno"; você não havia afirmado que
+     o retorno é feito via registrador %eax? 
+
+~~~>> 1.0
 
 P4
 
 a) Nos 2 primeiros o retorno foi "foo" enquanto no terceiro não conseguiu
 compartilhar as bibliotecas
 
+~~~> Os três programas executam, mas para o terceiro é preciso informar
+     o caminho da lib.
+
 b) Em static, a biblioteca sempre é carregada junto no binário enquanto
 dinamico é versionado separadamente e é carregado uma versao diferente do original
 e que pode ser compartilhado entre vários componentes.
+
+~~~> E sobre o tamanho, que era a pergunta?
 
 c) Nos dois primeiros, o foo é listado como texto (código), no terceiro
 é definido como indefinido. O bar, no primeiro é definido, mas como não
 é chamado, no segundo e terceiro não é definido.
 
+~~~> E sobre o significado das colunas (letras), que era a pergunta?
+
 d) Nos dois primeiros, a shared library é só o libc.so.6, enquanto no 
 terceiro é usado o libp4.so. Quando o terceiro é compilado, o custom library
 é compilado junto ao executavel e é definido como uma flag a ser usado
+
+~~~> O que é "custom library"? Todas as libs, estáticas e dinâmicas são
+     compiladas junto com o executável no exemplo.
+     E sobre como é acarregada a DLL?
 
 e) No dinâmico, quando o programa deve ser usado em vários hosts, a biblioteca
 é compartilhada não precisando ser ocupar o mesmo espaço em todos os hosts;
@@ -69,3 +105,8 @@ Agora quando várias libraries são usadas no mesmo host, dinamicamente irão
 compilar exatamente o que é usado para cada executável. Enquanto estaticamente,
 todo a biblioteca é compilada no binário de cada executável.
 
+~~~> Os etáticos são melhores no caso de atualização? Como?
+     A compilação, novamente, tem a ver com a construção dos binários, não
+     com a execução, certo?
+
+~~~>> 1.0
