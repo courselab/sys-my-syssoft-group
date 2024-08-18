@@ -5,74 +5,56 @@
 
 Answers:
 
-1. P1
+Questão 1:
 
-a) A main, como outras funções e defines como o printf, são definidas antes do tempo
-de compilação, tendo um espaço definido na stack quando ele é executado
+Resp: Por conta do PIE do linux, a execução faz com que os endereços da main sejam randômicos.
+Dessa forma, há a prevenção para alguns tipos de ataques fazendo com que seja mais difícil
+prever os endereços-alvo.
 
-~~~> E porque aparece com endereços diferentes?
-~~~>> 0.0
+Questão 2:
 
-2. P2
+Primeira execução do código original: 
+    input: foo
+    output: Access granted.
 
-a) O que ocorreu para ter essa vulnerabilidade é, como que o input foi direto do buffer 
-para a variável, todo o buffer foi alocado no espaço da memória. Quando foi realizar
-a verificação, todo o espaço que foi alocado para a memória foi testado, mas como o espaço
-principalmente alocado no programa era diferente do espaço alocado real, o programa
-não conseguiu definir e não fez a verificação. Isso se vê quando a stack é protegida e
-a memória não deixa ser alocado do buffer mais memória do que foi definido.
-Uma maneira de corrigir essa vulnerabilidade é alocar dinamicamente a memória do input
-que vem no buffer.
+Segunda execução do código original:
+    input: youshallnotpass
+    output: Access granted
 
-~~~> Todo tipo de variável é alocano no espaço de memória.
-     Não entendi o que quer dizer com "todo espaço para a memória foi testado",
-     ou com "o espaço ... alocado era diferente do espaço alocado real".
-     Neste exemplo, a proteção de memória (canário) não chega a funcionar.
-     Por que alocar dinamicamente resolveria o problema?
-
-~~~>> 1.0
-
-3. P3
-
-a) Pelas convenções de syscalls, o %eax é usado para receber o retorno das funções.
-As convenções definem como a arquitetura do processador lida com a memória e com os
-registradores realizam suas funções a nível de máquina. o ABI define as estruturas 
-e métodos que são compilados em baixo nível
-
-b) Ele utiliza o tamanho da função alocada no %ebp para alocar o retorno, que antes
-estava no %eax. Ele desaloca do registrador %eax, porque a convenção principal
-é que o %eax seja utilizado para receber retornos de funções.
-
-~~~> Sim, %eax é utilizado para retorno na convenção CDCL. Porém, não faz sentido
-     falar em "alocar" registrador.
-
-c) São usados para alocar a respectiva função e desalocá-la, isso se vê que é usado
-o tamanho da função a partir de onde ele é alocado (%ebp).
-
-~~~> O que signficaria "alocar função"?
-     O propósito das referidas instuções relaciona-se à manutenção do stack frame.
-
-d) Ele é uma convenção para guardar a função alocada em algum lugar na stack, 
-mas como a main já tem um espaço definido anteriormente na stack para recebê-lo
-ele é colocado nesse endereço, enquanto os outros são colocados enquanto a stack
-é preenchida. Essa é a maneira que a ABI do x86 lida com os endereços de funções.
-
-~~~> Você se refere à alocação de variáveis locais? Não entendi.
+Por conta da flags e da estrutura do código, é permitido que se faça o input de strings 
+maiores que o definido sem emitir erros e sem fazer a verificação.
 
 
-e) O espaço alocado para o retorno muda, enquanto com o retorno int, aloca 16 bits
-no char, aloca 4 bits. Isso é perceptível no espaço deixado nas syscalls antes
-do retorno da função.
 
-~~~> Não entendi "espaço alocado para retorno"; você não havia afirmado que
-     o retorno é feito via registrador %eax? 
+Para que seja mais robusto, pode se usar a variável 'verified' como retorno da função 'strcmp'.
+Assim a função previne que não seja aceito outros inputs além do que seja desejado
 
-~~~>> 1.0
+Com a flag '-fstack-protector', faz com que a memória seja protegida e não 
+deixa que se aloque mais memória para o que foi definida para a varivel 'user_key'
 
-P4
+Questao 3:
 
-a) Nos 2 primeiros o retorno foi "foo" enquanto no terceiro não conseguiu
-compartilhar as bibliotecas
+a) O parâmetro é passado para a função bar através da stack antes desta função
+ser chamada. Isso ocorre por conta do padrão da arquitetura x86 e da ABI.
+
+b) O valor da função bar é retornada através do registrador %eax. Isso também
+é feito através do padrão da arquitetura x86 e da ABI.
+
+c) As 2 primeiras instruções inicializam uma configuração para preparar a stack 
+para as instruções da função e as 2 últimas voltam para sua configuração original. 
+Elas organizam e gerenciam a stack para que sigam o padrão da arquitetura x86 e da ABI.
+
+d) A instrução sub prepara um espaço para se alocar as variáveis locais da função na stack
+e a instrução da main tem o intuito de alinhar de acordo com a arquitetura x86, ou seja, 
+para receber instruções de 16 bytes (ou 128 bits). 
+
+e) Ele colocou a instrução movbsl para converter o retorno de %eax para inteiro.
+Declarando a função antes da execução da main permite que essa otimização seja feita.
+
+
+Questão 4
+
+a) Os 3 programas tiveram o retorno "foo"
 
 ~~~> Os três programas executam, mas para o terceiro é preciso informar
      o caminho da lib.

@@ -1,0 +1,168 @@
+gcc -Wall -m64  -O0  -fno-pic -fno-pie -Wl,-no-pie p3.c -o p3
+make d IMG=p3  
+make[1]: Entering directory '/home/angrareis/Documentos/Graduação/13_sem/syssoft/sys-my-syssoft-group/quiz'
+
+p3:     file format elf64-x86-64
+
+
+Disassembly of section .init:
+
+0000000000401000 <_init>:
+  401000:	f3 0f 1e fa          	endbr64
+  401004:	48                   	dec    %eax
+  401005:	83 ec 08             	sub    $0x8,%esp
+  401008:	48                   	dec    %eax
+  401009:	8b 05 e9 2f 00 00    	mov    0x2fe9,%eax
+  40100f:	48                   	dec    %eax
+  401010:	85 c0                	test   %eax,%eax
+  401012:	74 02                	je     401016 <_init+0x16>
+  401014:	ff d0                	call   *%eax
+  401016:	48                   	dec    %eax
+  401017:	83 c4 08             	add    $0x8,%esp
+  40101a:	c3                   	ret
+
+Disassembly of section .text:
+
+0000000000401020 <_start>:
+  401020:	f3 0f 1e fa          	endbr64
+  401024:	31 ed                	xor    %ebp,%ebp
+  401026:	49                   	dec    %ecx
+  401027:	89 d1                	mov    %edx,%ecx
+  401029:	5e                   	pop    %esi
+  40102a:	48                   	dec    %eax
+  40102b:	89 e2                	mov    %esp,%edx
+  40102d:	48                   	dec    %eax
+  40102e:	83 e4 f0             	and    $0xfffffff0,%esp
+  401031:	50                   	push   %eax
+  401032:	54                   	push   %esp
+  401033:	45                   	inc    %ebp
+  401034:	31 c0                	xor    %eax,%eax
+  401036:	31 c9                	xor    %ecx,%ecx
+  401038:	48                   	dec    %eax
+  401039:	c7 c7 06 11 40 00    	mov    $0x401106,%edi
+  40103f:	ff 15 ab 2f 00 00    	call   *0x2fab
+  401045:	f4                   	hlt
+  401046:	66 2e 0f 1f 84 00 00 	nopw   %cs:0x0(%eax,%eax,1)
+  40104d:	00 00 00 
+
+0000000000401050 <_dl_relocate_static_pie>:
+  401050:	f3 0f 1e fa          	endbr64
+  401054:	c3                   	ret
+  401055:	66 2e 0f 1f 84 00 00 	nopw   %cs:0x0(%eax,%eax,1)
+  40105c:	00 00 00 
+  40105f:	90                   	nop
+
+0000000000401060 <deregister_tm_clones>:
+  401060:	b8 10 40 40 00       	mov    $0x404010,%eax
+  401065:	48                   	dec    %eax
+  401066:	3d 10 40 40 00       	cmp    $0x404010,%eax
+  40106b:	74 13                	je     401080 <deregister_tm_clones+0x20>
+  40106d:	b8 00 00 00 00       	mov    $0x0,%eax
+  401072:	48                   	dec    %eax
+  401073:	85 c0                	test   %eax,%eax
+  401075:	74 09                	je     401080 <deregister_tm_clones+0x20>
+  401077:	bf 10 40 40 00       	mov    $0x404010,%edi
+  40107c:	ff e0                	jmp    *%eax
+  40107e:	66 90                	xchg   %ax,%ax
+  401080:	c3                   	ret
+  401081:	66 66 2e 0f 1f 84 00 	data16 nopw %cs:0x0(%eax,%eax,1)
+  401088:	00 00 00 00 
+  40108c:	0f 1f 40 00          	nopl   0x0(%eax)
+
+0000000000401090 <register_tm_clones>:
+  401090:	be 10 40 40 00       	mov    $0x404010,%esi
+  401095:	48                   	dec    %eax
+  401096:	81 ee 10 40 40 00    	sub    $0x404010,%esi
+  40109c:	48                   	dec    %eax
+  40109d:	89 f0                	mov    %esi,%eax
+  40109f:	48                   	dec    %eax
+  4010a0:	c1 ee 3f             	shr    $0x3f,%esi
+  4010a3:	48                   	dec    %eax
+  4010a4:	c1 f8 03             	sar    $0x3,%eax
+  4010a7:	48                   	dec    %eax
+  4010a8:	01 c6                	add    %eax,%esi
+  4010aa:	48                   	dec    %eax
+  4010ab:	d1 fe                	sar    %esi
+  4010ad:	74 11                	je     4010c0 <register_tm_clones+0x30>
+  4010af:	b8 00 00 00 00       	mov    $0x0,%eax
+  4010b4:	48                   	dec    %eax
+  4010b5:	85 c0                	test   %eax,%eax
+  4010b7:	74 07                	je     4010c0 <register_tm_clones+0x30>
+  4010b9:	bf 10 40 40 00       	mov    $0x404010,%edi
+  4010be:	ff e0                	jmp    *%eax
+  4010c0:	c3                   	ret
+  4010c1:	66 66 2e 0f 1f 84 00 	data16 nopw %cs:0x0(%eax,%eax,1)
+  4010c8:	00 00 00 00 
+  4010cc:	0f 1f 40 00          	nopl   0x0(%eax)
+
+00000000004010d0 <__do_global_dtors_aux>:
+  4010d0:	f3 0f 1e fa          	endbr64
+  4010d4:	80 3d 35 2f 00 00 00 	cmpb   $0x0,0x2f35
+  4010db:	75 13                	jne    4010f0 <__do_global_dtors_aux+0x20>
+  4010dd:	55                   	push   %ebp
+  4010de:	48                   	dec    %eax
+  4010df:	89 e5                	mov    %esp,%ebp
+  4010e1:	e8 7a ff ff ff       	call   401060 <deregister_tm_clones>
+  4010e6:	c6 05 23 2f 00 00 01 	movb   $0x1,0x2f23
+  4010ed:	5d                   	pop    %ebp
+  4010ee:	c3                   	ret
+  4010ef:	90                   	nop
+  4010f0:	c3                   	ret
+  4010f1:	66 66 2e 0f 1f 84 00 	data16 nopw %cs:0x0(%eax,%eax,1)
+  4010f8:	00 00 00 00 
+  4010fc:	0f 1f 40 00          	nopl   0x0(%eax)
+
+0000000000401100 <frame_dummy>:
+  401100:	f3 0f 1e fa          	endbr64
+  401104:	eb 8a                	jmp    401090 <register_tm_clones>
+
+0000000000401106 <main>:
+  401106:	55                   	push   %ebp
+  401107:	48                   	dec    %eax
+  401108:	89 e5                	mov    %esp,%ebp
+  40110a:	b8 00 00 00 00       	mov    $0x0,%eax
+  40110f:	e8 07 00 00 00       	call   40111b <foo>
+  401114:	b8 00 00 00 00       	mov    $0x0,%eax
+  401119:	5d                   	pop    %ebp
+  40111a:	c3                   	ret
+
+000000000040111b <foo>:
+  40111b:	55                   	push   %ebp
+  40111c:	48                   	dec    %eax
+  40111d:	89 e5                	mov    %esp,%ebp
+  40111f:	48                   	dec    %eax
+  401120:	83 ec 20             	sub    $0x20,%esp
+  401123:	89 7d ec             	mov    %edi,-0x14(%ebp)
+  401126:	8b 45 ec             	mov    -0x14(%ebp),%eax
+  401129:	83 c0 01             	add    $0x1,%eax
+  40112c:	89 c7                	mov    %eax,%edi
+  40112e:	b8 00 00 00 00       	mov    $0x0,%eax
+  401133:	e8 0b 00 00 00       	call   401143 <bar>
+  401138:	0f be c0             	movsbl %al,%eax
+  40113b:	89 45 fc             	mov    %eax,-0x4(%ebp)
+  40113e:	8b 45 fc             	mov    -0x4(%ebp),%eax
+  401141:	c9                   	leave
+  401142:	c3                   	ret
+
+0000000000401143 <bar>:
+  401143:	55                   	push   %ebp
+  401144:	48                   	dec    %eax
+  401145:	89 e5                	mov    %esp,%ebp
+  401147:	89 7d ec             	mov    %edi,-0x14(%ebp)
+  40114a:	8b 45 ec             	mov    -0x14(%ebp),%eax
+  40114d:	83 c0 01             	add    $0x1,%eax
+  401150:	89 45 fc             	mov    %eax,-0x4(%ebp)
+  401153:	8b 45 fc             	mov    -0x4(%ebp),%eax
+  401156:	5d                   	pop    %ebp
+  401157:	c3                   	ret
+
+Disassembly of section .fini:
+
+0000000000401158 <_fini>:
+  401158:	f3 0f 1e fa          	endbr64
+  40115c:	48                   	dec    %eax
+  40115d:	83 ec 08             	sub    $0x8,%esp
+  401160:	48                   	dec    %eax
+  401161:	83 c4 08             	add    $0x8,%esp
+  401164:	c3                   	ret
+make[1]: Leaving directory '/home/angrareis/Documentos/Graduação/13_sem/syssoft/sys-my-syssoft-group/quiz'

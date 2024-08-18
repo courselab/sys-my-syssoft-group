@@ -28,7 +28,7 @@ p4-v3 : p4.o libp4.so
 	gcc -m64 $< -L. -lp4 -o $@
 
 p4.o p4a.o p4b.o : %.o : %.c
-	gcc -m64 -c $< -o $@
+	gcc  -m64 -c $< -o $@
 
 libp4.a : p4a.o p4b.o
 	ar rcs $@ $^

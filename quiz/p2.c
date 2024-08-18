@@ -1,12 +1,9 @@
 /*
  *    SPDX-FileCopyrightText: 2021 Monaco F. J. <monaco@usp.br>
- *    SPDX-FileCopyrightText: 2024 reisvictor1 <reisvictor448@gmail.com>
  *   
  *    SPDX-License-Identifier: GPL-3.0-or-later
  *
- *  This file is a derivative work from SYSeg (https://gitlab.com/monaco/syseg)
- *  and contains modifications carried out by the following author(s):
- *  reisvictor1 <reisvictor448@gmail.com>
+ *    This file is part of SYSeg, available at https://gitlab.com/monaco/syseg.
  */
 
 #include <stdlib.h>
@@ -27,20 +24,18 @@ int main (void)
 
   /* Verify credentials. */
 
-  if (!strcmp (user_key, "foo"))
-    verified = 1;
+  verified = strcmp(user_key, "foo");
 
   if (!verified)
     {
-      printf ("Access denied\n");
+      printf ("Access granted\n");
       exit (1);
     }
 
-  printf ("Access granted.\n");
+  printf ("Access denied.\n");
 
   /* Priviledged code follows... */
 
   return 0;
 }
-
 

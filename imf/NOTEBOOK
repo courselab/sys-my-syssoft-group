@@ -1,5 +1,22 @@
+Primeira coisa  a se fazer é verificar como estão os arquivos "decode"
+e "libcry" . Para isso, iremos ver as instruções que estão sendo carregadas fazendo um
+disassembly deles:
 
-EVALUATION
-==========
+objdump -d libcry.so > libcry_dumped.txt
+objdump -d decode > decode_dumped.txt
 
-Aparentemente o código inicial não foi desenvolvido.
+
+Conseguimos perceber que, nas instruções do arquivo "decode", há uma chamada para
+strcmp. Então provavelmente, o código usa o strcmp para fazer a verificação dos tokens
+da entrada feita pelo usuário
+
+Então para que se quebre esse código, podemos criar um código que substitua esse strcmp
+por um que não faça verificação e só retorne '0' (ou seja, todas as strings vao ser iguais)..
+Então compilamos este código como um lib dinamica e, ao executar o decode, nós carregamos
+esta lib junto:
+
+gcc -m32 -shared -fPIC -o malicious_lib.so malicious_lib.c -ldl
+LD_PRELOAD=./malicious_lib.so ./decode secret.cry
+
+Então este código retornava um link para o drive para a música tema de Missão Impossível,
+mas que era acessada sofente com a senha "asdf"
