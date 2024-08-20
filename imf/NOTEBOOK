@@ -15,8 +15,8 @@ por um que não faça verificação e só retorne '0' (ou seja, todas as strings
 Então compilamos este código como um lib dinamica e, ao executar o decode, nós carregamos
 esta lib junto:
 
-gcc -m32 -shared -fPIC -o malicious_lib.so malicious_lib.c -ldl
-LD_PRELOAD=./malicious_lib.so ./decode secret.cry
+gcc -m64 -shared -fPIC -o my_lib.so my_lib.c -ldl
+LD_PRELOAD=./my_lib.so ./decode secret.cry
 
-Então este código retornava um link para o drive para a música tema de Missão Impossível,
-mas que era acessada sofente com a senha "asdf"
+O que está no secret.cry é um link para um drive que contém a
+música tema de Missão Impossível, mas que era acessada somente com a senha "asdf"
