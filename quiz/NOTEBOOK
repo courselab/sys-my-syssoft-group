@@ -25,7 +25,6 @@ Por conta da flags e da estrutura do código, é permitido que se faça o input 
 maiores que o definido sem emitir erros e sem fazer a verificação.
 
 
-
 Para que seja mais robusto, pode se usar a variável 'verified' como retorno da função 'strcmp'.
 Assim a função previne que não seja aceito outros inputs além do que seja desejado
 
@@ -52,43 +51,47 @@ e) Ele colocou a instrução movbsl para converter o retorno de %eax para inteir
 Declarando a função antes da execução da main permite que essa otimização seja feita.
 
 
-Questão 4
+Questão 4:
 
-a) Os 3 programas tiveram o retorno "foo"
+a) Os 3 programas tiveram o retorno "foo", porém na última é retornado o 'foo' da libp4.so
 
-~~~> Os três programas executam, mas para o terceiro é preciso informar
-     o caminho da lib.
 
-b) Em static, a biblioteca sempre é carregada junto no binário enquanto
-dinamico é versionado separadamente e é carregado uma versao diferente do original
-e que pode ser compartilhado entre vários componentes.
+b) O tamanho da onde todos os objetos são copiados é o maior, enquanto a versao que usa a 
+lib compartilhada dinamicamente é o menor. A maior diferença entre 
+a lib linkada estaticamente e a dinâmica é que, na versao que linka
+a static library, o conteudo do arquivo é incluido quando acontece o linking
+na compilação. Dinamicamente, um ponteiro para o arquivo está sendo linkado é o que está
+sendo incluido no executável, só quando você o executa que os arquivos linkados
+dinamicamente são trazidos para a memória principal, não do executável que estava
+no HD. As shared libraries diminuem o tamanho de código que é copiado..
 
-~~~> E sobre o tamanho, que era a pergunta?
 
-c) Nos dois primeiros, o foo é listado como texto (código), no terceiro
+c) O significado da segunda coluna é o tipo de símbolo que a instrução define.
+Nos dois primeiros, a chamada do foo é listado como texto (código), no terceiro
 é definido como indefinido. O bar, no primeiro é definido, mas como não
 é chamado, no segundo e terceiro não é definido.
 
-~~~> E sobre o significado das colunas (letras), que era a pergunta?
 
-d) Nos dois primeiros, a shared library é só o libc.so.6, enquanto no 
-terceiro é usado o libp4.so. Quando o terceiro é compilado, o custom library
-é compilado junto ao executavel e é definido como uma flag a ser usado
+d) Nos dois primeiros, a shared library necessária é só o libc.so.6, enquanto no 
+terceiro o libp4.so também é necessário no tempo de compilação. 
+O linker realiza uma  quantidade mínima de trabalho em tempo de compilação, somente
+gravando quais libs são necessárias para o executável em um indice. 
+A  maior parte do trabalho é feita quando a aplicação é carregada em memória.
+ou na execução do programa, adicionando os dados relevantes de cada lib no espaço 
+de memória do processo.
 
-~~~> O que é "custom library"? Todas as libs, estáticas e dinâmicas são
-     compiladas junto com o executável no exemplo.
-     E sobre como é acarregada a DLL?
 
-e) No dinâmico, quando o programa deve ser usado em vários hosts, a biblioteca
-é compartilhada não precisando ser ocupar o mesmo espaço em todos os hosts;
-porém quando é atualizado, os estáticos são melhores são, porque irão compilar
-tudo o que foi atualizado em todos os hosts.
-Agora quando várias libraries são usadas no mesmo host, dinamicamente irão
-compilar exatamente o que é usado para cada executável. Enquanto estaticamente,
-todo a biblioteca é compilada no binário de cada executável.
+e) Quando há instalação em outros hosts: nas libs estáticas, há a simplificação 
+das dependências das libs, pois tem dependencias externas enquanto nas dinâmicas têm a
+necessidade de garantir que as libs dinâmicas estejam no host.
 
-~~~> Os etáticos são melhores no caso de atualização? Como?
-     A compilação, novamente, tem a ver com a construção dos binários, não
-     com a execução, certo?
+Na ataualização de bibliotecas: nas libs estáticas, é necessário que todos os executáveis
+que usam a lib sejam recompilados e redistribuídos, enquanto na lib dinâmica somente
+a lib precisa ser atualizada.
 
-~~~>> 1.0
+A biblioteca é usada por muitos programas no mesmo host: 
+Nas libs estáticas, cada programa vai copiar os objetos da lib, tendo mais uso do 
+espaço do disco, enquanto nas dinâmicas, a lib é compartilhada entre os programas,
+economizando espaço no disco e memória.
+
+
